@@ -22,10 +22,11 @@ class PokemonCardRepositoryImpl implements PokemonCardRepository {
                 DioCacheInterceptor(
                   options: CacheOptions(
                     store: MemCacheStore(),
-                    policy: CachePolicy.refreshForceCache,
+                    policy: CachePolicy.request,
                     hitCacheOnErrorExcept: [401, 403],
-                    maxStale: const Duration(days: 7),
+                    maxStale: const Duration(days: 30),
                     priority: CachePriority.high,
+                    allowPostMethod: false,
                   ),
                 ),
               );
@@ -43,6 +44,7 @@ class PokemonCardRepositoryImpl implements PokemonCardRepository {
         queryParameters: {
           'page': page,
           'pageSize': pageSize,
+          'orderBy': 'name',
         },
       );
 
@@ -65,9 +67,13 @@ class PokemonCardRepositoryImpl implements PokemonCardRepository {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
-        throw Exception('Connection timeout. Please check your internet connection.');
+        throw Exception('Connection timeout. Please try again later.');
       } else if (e.type == DioExceptionType.connectionError) {
-        throw Exception('No internet connection. Please check your network.');
+        throw Exception('Connection error. Please check your network.');
+      } else if (e.response?.statusCode == 504) {
+        throw Exception('Server temporarily unavailable. Please try again later.');
+      } else if (e.response?.statusCode != null && e.response!.statusCode! >= 500) {
+        throw Exception('Server error. Please try again later.');
       }
       throw Exception('Network error: ${e.message}');
     } catch (e) {

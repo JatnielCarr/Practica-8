@@ -2,12 +2,12 @@
 class ApiConfig {
   /// URL base de la API
   /// 
-  /// En desarrollo local: http://localhost:3000
-  /// En producción: reemplazar con la URL deployed (ej: https://tu-api.railway.app)
-  static const String baseUrl = 'http://localhost:3000/api/v1';
+  /// Usando API pública de Pokémon TCG: https://api.pokemontcg.io/v2
+  /// Esta API funciona sin necesidad de tener tu laptop encendida
+  static const String baseUrl = 'https://api.pokemontcg.io/v2';
   
-  /// API Key (opcional para tu propia API)
-  static const String? apiKey = null;
+  /// API Key para pokemontcg.io
+  static const String? apiKey = 'f5f9f822-fcfd-47ad-9088-b24a4860c95f';
   
   /// Timeout para requests
   static const Duration timeout = Duration(seconds: 30);

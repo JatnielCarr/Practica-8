@@ -32,6 +32,7 @@ dependencies:
 dev_dependencies:
   bloc_test: ^10.0.0
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4
@@ -43,6 +44,15 @@ flutter_icons:
   image_path: "assets/images/entrenador-pokemon.png"
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/images/entrenador-pokemon.png"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/entrenador-pokemon.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/entrenador-pokemon.png
+    color: "#FFFFFF"
 
 flutter:
   generate: true
